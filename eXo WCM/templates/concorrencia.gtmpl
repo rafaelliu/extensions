@@ -1,0 +1,82 @@
+<% 
+import javax.jcr.Node;
+import java.util.Calendar;
+import org.exoplatform.wcm.webui.paginator.UICustomizeablePaginator;
+
+def getStringProperty(node, property) {
+	if (node.hasProperty(property)) {
+		return node.getProperty(property).getValue().getString();
+	}
+	return "";
+}
+
+def getDateProperty(node, property, format) {
+	if (node.hasProperty(property)) {
+		Calendar cal = node.getProperty(property).getValue().getDate();
+		return String.format(format, cal);
+	}
+	return "";
+}
+
+%>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<div id="$uicomponent.id" class="pad">
+	<div class="Caption">
+<% 	
+			if (uicomponent.getUIPageIterator().getAvailable() == 0) {
+%>
+					<div style="height: 20px; text-align: center; font-size: 13px; background: white; padding: 10px; margin: 5px;">
+						<%= _ctx.appRes("UIPCLVConfig.label.content-not-found") %>
+					</div>
+<%
+			} else {			
+				def currentPageData = uicomponent.getCurrentPageData();							
+				
+				for (Node node : currentPageData) {
+
+					String itemTitulo = getStringProperty(node, "exo:title");
+					String itemLink = "/ExoFile/servlet/recuperaarquivo?idObj=" + getStringProperty(node, "acme:documento");
+					String itemObjeto = getStringProperty(node, "acme:objeto");
+
+					String itemAbertura = getDateProperty(node, "acme:data", '%1$td/%1$tm/%1$tY, às %1$tHh');
+					String itemLocal = getStringProperty(node, "acme:local");
+					String itemPublicacao = getDateProperty(node, "acme:dataPublicacao", '%1$td/%1$tm/%1$tY');
+					String itemResultado = getStringProperty(node, "acme:resultado");
+					String itemRevogacao = getStringProperty(node, "acme:revogacao");
+		
+%>	
+						<div class="panel">
+							<div class="panel-title">
+<%
+								if (!"".equals(itemResultado)) {
+%>
+									<a class="resultado" href="/ExoFile/servlet/recuperaarquivo?idObj=$itemResultado">Resultado</a>
+<%
+								} else if (!"".equals(itemRevogacao)) {
+%>
+									<a class="revogado" href="/ExoFile/servlet/recuperaarquivo?idObj=$itemRevogacao">Revogada</a>
+<%
+								}
+%>
+								<a href="$itemLink">$itemTitulo</a>
+							</div>
+							<div class="panel-content">
+								<b>Objeto:</b> $itemObjeto <br/>
+								<b>Abertura:</b> $itemAbertura (horário de Brasília)<br/>
+								<b>Local:</b> $itemLocal<br/>
+								<b>Publicado em:</b> $itemPublicacao
+							</div>
+						</div>
+<%
+				}
+			}
+%>
+		<div class="CaptionFunc">
+<% 
+			if (uicomponent.showPaginator()) { 
+				uicomponent.renderChild(UICustomizeablePaginator.class)
+			} 
+%>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,38 @@
+<%
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import org.exoplatform.services.wcm.images.RESTImagesRendererService;
+
+def currentNode = uicomponent.getNode();
+
+def titulo = currentNode.getProperty("exo:title").getString();
+
+Calendar cal = currentNode.getProperty("exo:dateCreated").getDate();
+SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy '-' HH':'mm");
+def data = formatter.format(cal.getTime());
+
+def conteudo = "";
+
+if (currentNode.hasProperty("acme:conteudo")) {
+	conteudo = currentNode.getProperty("acme:conteudo").getString();
+}
+
+
+
+%>	
+
+<h1><%= titulo %></h1>
+<span class="data"><%= data %></span>
+
+<%       
+if (currentNode.hasProperty("acme:figura")) {
+	RESTImagesRendererService imagesRenderer = uicomponent.getApplicationComponent(RESTImagesRendererService.class);								
+	def imageURI = imagesRenderer.generateURI(currentNode,"acme:figura")
+%>
+	<div style="float: left; padding-right: 10px;"><img	src="$imageURI" /></div>
+<%       
+}
+%>
+
+<%= conteudo %>
+
