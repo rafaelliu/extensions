@@ -1,0 +1,99 @@
+<%
+ import javax.jcr.Node;
+ import java.util.Calendar;
+ import java.text.SimpleDateFormat;
+ import org.exoplatform.download.DownloadService;
+ import org.exoplatform.download.InputStreamDownloadResource;
+ import java.io.InputStream;
+
+ String[] fieldProperty; 
+%>
+
+<div class="UIForm FormLayout">
+	<% uiform.begin() %> 
+		<div class="HorizontalLayout">
+
+			<table class="UIFormGrid">
+
+				<tr>
+					<td class="FieldLabel"><%=_ctx.appRes("trt23_noticia.dialog.label.name")%></td>
+					<td class="FieldComponent">
+					<%
+						fieldProperty = ["jcrPath=/node", "editable=if-null", "validate=empty,name"];
+						uicomponent.addTextField("name", fieldProperty);
+					%>
+					</td>
+				</tr>
+				<tr>
+					<td class="FieldLabel"><%=_ctx.appRes("trt23_noticia.dialog.label.trt23_titulo")%></td>
+					<td class="FieldComponent">
+				<%
+						fieldProperty = ["jcrPath=/node/trt23:titulo", "validate=empty"];
+						uicomponent.addTextField("/node/trt23_titulo", fieldProperty);
+				%>
+					</td>
+				</tr>
+				<tr>
+					<td class="FieldLabel"><%=_ctx.appRes("trt23_noticia.dialog.label.trt23_corpo")%></td>
+					<td class="FieldComponent">
+				<%
+                  fieldProperty = ["jcrPath=/node/trt23:corpo", "defaultValues=Type content here...", "", "options=toolbar:CompleteWCM"];
+                  uicomponent.addRichtextField( "htmlData" + uicomponent.hashCode(), fieldProperty);
+				%>
+					</td>
+				</tr>
+				<tr>
+					<td class="FieldLabel"><%=_ctx.appRes("trt23_noticia.dialog.label.trt23_imagem")%></td>
+					<td class="FieldComponent">
+          <%
+           if(uicomponent.isEditing()) {
+             def curNode = uicomponent.getNode() ;
+             if(curNode.hasProperty("trt23:imagem") && curNode.getProperty("trt23:imagem").getStream().available() > 0) {
+               DownloadService dservice = uicomponent.getApplicationComponent(DownloadService.class);
+               InputStream input = curNode.getProperty("trt23:imagem").getStream();
+               InputStreamDownloadResource dresource = new InputStreamDownloadResource(input, "imagem_destaqueFieldName");
+               dresource.setDownloadName(curNode.getName());
+               def imgSrc = dservice.getDownloadLink(dservice.addDownloadResource(dresource));
+               def actionLink = uicomponent.event("RemoveData", "trt23:imagem");
+               %>
+                 <div>
+                   <image src="$imgSrc" width="100px" height="80px"/>
+                   <a href="$actionLink">
+                     <img src="/eXoResources/skin/DefaultSkin/background/Blank.gif" alt="" class="ActionIcon Remove16x16Icon"/>
+                   </a>
+                 </div>
+               <%
+             } else {
+               fieldProperty = ["jcrPath=/node/trt23:imagem"] ;
+               uicomponent.addUploadField("/node/imagem_destaqueFieldName", fieldProperty) ;
+             }
+           } else {
+             fieldProperty = ["jcrPath=/node/trt23:imagem"] ;
+             uicomponent.addUploadField("/node/imagem_destaqueFieldName", fieldProperty) ;
+           }
+          %>
+					</td>
+				</tr>
+				<tr>
+					<td class="FieldLabel">Destaque</td>
+					<td class="FieldComponent">
+				<%
+                  fieldProperty = ["jcrPath=/node/trt23:destaque", "defaultValues=", "", "options=Notícia Destaque,"];
+                  uicomponent.addCheckBoxField("/node/Checkbox", fieldProperty);
+				%>
+					</td>
+				</tr>
+				<tr id="chamada">
+					<td class="FieldLabel"><%=_ctx.appRes("trt23_noticia.dialog.label.trt23_chamada")%></td>
+					<td class="FieldComponent">
+				<%
+						fieldProperty = ["jcrPath=/node/trt23:chamada"];
+						uicomponent.addTextField("/node/trt23_chamada", fieldProperty);
+				%>
+					</td>
+				</tr>
+			</table>
+			<%uiform.processRenderAction()%>
+		</div>
+	<%uiform.end()%>
+</div>
