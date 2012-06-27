@@ -1,0 +1,86 @@
+<%
+// Generate template for nodetype automatically
+
+	def node = uicomponent.getNode();
+	def name = node.getName();
+	def values;
+	def valueDisplay;
+%>
+		<div id="$uicomponent.id">
+			<table class="UIFormGrid">
+				<tr>
+					<td class="FieldLabel"><%=_ctx.appRes("exo_emaiAction.dialog.label.name")%></td>
+					<td class="FieldComponent">${name}</td>
+				</tr>
+				<%
+				 if (node.hasProperty("exo:name")) {
+				%>
+				<tr>
+					<td class="FieldLabel"><%=_ctx.appRes("exo_emaiAction.dialog.label.exo_name")%></td>
+				<%
+					// Render for single value;
+					valueDisplay = node.getProperty("exo:name").getString();
+				%>
+					<td class="FieldComponent">${valueDisplay}</td>
+				</tr>
+				<%
+					}
+				%>
+				<%
+				 if (node.hasProperty("exo:from")) {
+				%>
+				<tr>
+					<td class="FieldLabel">From:</td>
+				<%
+					// Render for single value;
+					valueDisplay = node.getProperty("exo:from").getString();
+				%>
+					<td class="FieldComponent">${valueDisplay}</td>
+				</tr>
+				<%
+					}
+				%>
+				<%
+				 if (node.hasProperty("exo:to")) {
+				%>
+				<tr>
+					<td class="FieldLabel">To:</td>
+				<%
+					// Render for single value;
+					valueDisplay = node.getProperty("exo:to").getString();
+				%>
+					<td class="FieldComponent">${valueDisplay}</td>
+				</tr>
+				<%
+					}
+				%>
+				<%
+				 if (node.hasProperty("exo:subject")) {
+				%>
+				<tr>
+					<td class="FieldLabel">Subject:</td>
+				<%
+					// Render for single value;
+					valueDisplay = node.getProperty("exo:subject").getString();
+				%>
+					<td class="FieldComponent">${valueDisplay}</td>
+				</tr>
+				<%
+					}
+				%>
+				<%
+				 if (node.hasProperty("exo:message")) {
+				%>
+				<tr>
+					<td class="FieldLabel">Message:</td>
+				<%
+					// Render for single value;
+					valueDisplay = node.getProperty("exo:message").getString();
+				%>
+					<td class="FieldComponent">${valueDisplay}</td>
+				</tr>
+				<%
+					}
+				%>
+			</table>
+		</div>

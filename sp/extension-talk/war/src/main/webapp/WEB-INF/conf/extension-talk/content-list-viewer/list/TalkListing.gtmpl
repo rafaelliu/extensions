@@ -1,0 +1,48 @@
+<%                                                                      
+      import javax.jcr.Node;                                                      
+      import org.exoplatform.wcm.webui.paginator.UICustomizeablePaginator;                                      
+      import org.exoplatform.wcm.webui.clv.UICLVPortlet;                                              
+      import org.exoplatform.wcm.webui.Utils;                                               
+      import org.exoplatform.services.wcm.core.NodeLocation;                                          
+
+      def getProperty(node, property) {
+			if (node.hasProperty(property)) {
+				return node.getProperty(property).getValue().getString();
+			}
+			return "";
+		}
+
+		def getPropertyAsBoolean(node, property) {
+			if (node.hasProperty(property)) {
+				return node.getProperty(property).getValue().getBoolean();
+			}
+			return "";
+		}
+%>                                                                      
+
+<table width="80%" cellspacing="1" cellpadding="0" border="1">
+    <tbody>
+        <tr>
+            <th width="80%">Title</th>
+            <th width="20%">Type</th>
+        </tr>
+        <%
+						def currentPageData = uicomponent.getCurrentPageData();
+						i = 0;
+						for (viewNode in currentPageData) {
+							if(!getPropertyAsBoolean(viewNode, "exo:fg_p_public")) continue;
+
+							def itemLink = uicomponent.getURL(viewNode);
+							def itemTitle = getProperty(viewNode, "exo:fg_p_title");
+							def itemType = getProperty(viewNode, "exo:fg_p_type");
+
+                  %>
+        <tr>
+            <td><b><a href="$itemLink">$itemTitle</a></b></td>
+            <td>$itemType</td>
+        </tr>
+						<%
+						}
+						%>
+    </tbody>
+</table>

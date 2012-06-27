@@ -1,0 +1,22 @@
+<nodeTypes xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:mix="http://www.jcp.org/jcr/mix/1.0"
+  xmlns:jcr="http://www.jcp.org/jcr/1.0">
+
+  <nodeType name="exo:mailAction" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
+    <supertypes>
+      <supertype>exo:scriptAction</supertype>
+    </supertypes>
+    <propertyDefinitions>
+      <propertyDefinition name="exo:script" requiredType="String" autoCreated="true" mandatory="true" onParentVersion="COPY" protected="true" multiple="false">
+        <valueConstraints/>
+        <defaultValues>
+          <defaultValue>ecm-explorer/action/MailAction.groovy</defaultValue>
+        </defaultValues>
+      </propertyDefinition>
+      <propertyDefinition name="exo:to" requiredType="String" autoCreated="false" mandatory="true" onParentVersion="COPY" protected="false" multiple="false"/>
+      <propertyDefinition name="exo:from" requiredType="String" autoCreated="false" mandatory="true" onParentVersion="COPY" protected="false" multiple="false"/>
+      <propertyDefinition name="exo:subject" requiredType="String" autoCreated="false" mandatory="true" onParentVersion="COPY" protected="false" multiple="false"/>
+      <propertyDefinition name="exo:message" requiredType="String" autoCreated="false" mandatory="true" onParentVersion="COPY" protected="false" multiple="false"/>
+    </propertyDefinitions>
+  </nodeType>
+
+</nodeTypes>

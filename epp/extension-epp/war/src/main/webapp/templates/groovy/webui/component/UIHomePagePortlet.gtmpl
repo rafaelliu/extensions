@@ -1,0 +1,18 @@
+<div class="UIHomePagePortlet" id="$uicomponent.id">
+	<div class="TLContainer">
+		<div class="PortletDecoration">
+		
+			<div class="HomePortletAdBackround">
+				<img width="100%" src="/extension-epp/img/home.png"/>
+			</div>
+
+			<div style="margin: 25px;">
+				<h1 style="font-family:Verdana,Arial,Helvetica,sans-serif; font-weight: normal; letter-spacing: -0.06em; color: #CC0000; font-size: 27px;">About the JBoss Way</h1>
+				<p>The JBoss Way focuses on making sure developers are as productive as possible and enabling them to do great things.  It's a development approach that provides developers a more productive and simple way to develop modern applications.  The JBoss Way introduces a new set frameworks, tools and architectural designs. &nbsp;While JBoss is introducing new technologies, rest assured that you can reuse existing investments and integrate them while building modern applications that can leverage cloud and mobile capabilities.</p> <p>What differentiates The JBoss Way from other initiatives is its <em>enablement aspect.</em> Besides technology, The JBoss Way provides a series of <a href="/developer/tutorials.html">tutorials</a>, <a href="/developer/quickstarts.html">quick-starts</a>, <a href="http://www.jboss.org/jdf/stack/jboss-bom/">maven archetypes</a>, <a href="/developer/videos.html">screencasts</a>  and <a href="https://github.com/jboss-jdf/ticket-monster">reference architectures</a> that allow developers 
+to quickly generate modern applications.</p>
+			</div>
+
+		</div>	
+	</div>	
+	<div class="ClearBoth"><span></span></div>
+</div>

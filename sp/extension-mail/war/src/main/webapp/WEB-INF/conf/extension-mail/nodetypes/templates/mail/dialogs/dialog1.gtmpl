@@ -1,0 +1,90 @@
+<div class="UIFormWithTitle">
+  <div class="TitleBar"><%=_ctx.appRes(uicomponent.getId() + ".title")%></div>
+	<% uiform.begin() %>
+  <div class="HorizontalLayout">
+  	<table class="UIFormGrid">	  
+			<tr>
+		    <td class="FieldLabel" style="display:none"><%=_ctx.appRes("AutoVersioning.dialog.label.id")%></td>
+		    <td class="FieldComponent" style="display:none">
+				  <%
+					 String[] fieldId = ["jcrPath=/node", "mixintype=mix:affectedNodeTypes", "editable=false", "visible=if-not-null"] ;
+					 uicomponent.addMixinField("id", fieldId) ;  
+				  %>
+				</td>
+			</tr>
+			<tr>		          					
+			  <td class="FieldLabel"><%=_ctx.appRes("AutoVersioning.dialog.label.name")%></td>
+			  <td class="FieldComponent">
+				  <% 
+					String[] fieldName = ["jcrPath=/node/exo:name", "validate=empty"];
+					uicomponent.addTextField("actionName", fieldName);
+				  %>
+				</td>
+			</tr>
+			<tr>		          					
+			  <td class="FieldLabel"><%=_ctx.appRes("AutoVersioning.dialog.label.lifecycle")%></td>
+			  <td class="FieldComponent">
+			  <% 
+          String[] fieldLifecycle = ["jcrPath=/node/exo:lifecyclePhase", 
+                                     "options=read,node_added,node_removed,property_added,property_removed,property_changed",
+                                     "multiValues=true", "onchange=true","size=5","validate=empty"] ;
+          uicomponent.addSelectBoxField("lifecycle", fieldLifecycle) ;
+        %>
+				</td>
+			</tr>
+			<tr>		          					
+			  <td class="FieldLabel"><%=_ctx.appRes("AutoVersioning.dialog.label.description")%></td>
+			  <td class="FieldComponent">
+				  <% 
+					String[] fieldDescription = ["jcrPath=/node/exo:description"] ;         
+					uicomponent.addTextAreaField("description", fieldDescription) ;
+				  %>
+				</td>
+			</tr>	
+			<tr>                       
+        <td class="FieldLabel"><%=_ctx.appRes("AutoVersioning.dialog.label.affectedNodeTypeNames")%></td>
+        <td class="FieldComponent">
+        <% 
+          String[] fieldAffectedNodetypes = ["jcrPath=/node/exo:affectedNodeTypeNames", "selectorAction=selectAffectedNodeTypes", "multiValues=true", "selectorClass=org.exoplatform.ecm.webui.nodetype.selector.UINodeTypeSelector", "selectorIcon=SelectPath24x24Icon", "validate=empty", "editable=false"];
+        uicomponent.addActionField("affectedNodetypes", fieldAffectedNodetypes);
+        %>
+      </tr>
+			<tr>                       
+        <td class="FieldLabel">To:</td>
+        <td class="FieldComponent">
+				  <% 
+					String[] fieldTo = ["jcrPath=/node/exo:to", "validate=empty"];
+					uicomponent.addTextField("to", fieldTo);
+				  %>
+      </tr>
+			<tr>                       
+        <td class="FieldLabel">From:</td>
+        <td class="FieldComponent">
+				  <% 
+					String[] fieldFrom = ["jcrPath=/node/exo:from", "validate=empty"];
+					uicomponent.addTextField("from", fieldFrom);
+				  %>
+      </tr>
+			<tr>                       
+        <td class="FieldLabel">Subject:</td>
+        <td class="FieldComponent">
+				  <% 
+					String[] fieldSubject = ["jcrPath=/node/exo:subject", "validate=empty"];
+					uicomponent.addTextField("subject", fieldSubject);
+				  %>
+      </tr>
+			<tr>                       
+        <td class="FieldLabel">Message:</td>
+        <td class="FieldComponent">
+				  <% 
+					String[] fieldMessage = ["jcrPath=/node/exo:message"] ;
+					uicomponent.addTextAreaField("message", fieldMessage);
+				  %>
+      </tr>
+		</table>
+		<%/* start render action*/%>
+		<%uiform.processRenderAction()%>
+		<%/* end render action*/%>
+  </div>
+  <%uiform.end()%>
+</div>
